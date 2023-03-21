@@ -30,6 +30,6 @@ class LiveDataTimerActivity : AppCompatActivity() {
             Log.d("LiveDataTimerActivity", "Updating timer")
         }
 
-        // TODO: observe the ViewModel's elapsed time
+        liveDataTimerViewModel.elapsedTime.observe(this, elapsedTimeObserver)
     }
 }

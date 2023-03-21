@@ -24,7 +24,7 @@ class LiveDataTimerViewModel : ViewModel() {
             override fun run() {
                 val newValue = (SystemClock.elapsedRealtime() - initialTime) / ONE_SECOND
                 // setValue() cannot be called from a background thread so post to main thread.
-                // TODO: post the new value with LiveData.postValue()
+                _elapsedTime.postValue(newValue)
             }
         }, ONE_SECOND, ONE_SECOND)
     }
