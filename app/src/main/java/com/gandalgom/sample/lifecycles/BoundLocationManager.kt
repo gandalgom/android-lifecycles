@@ -4,14 +4,18 @@ import android.content.Context
 import android.location.LocationListener
 import android.location.LocationManager
 import android.util.Log
-import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
+
+// LifecycleEvent annotation is deprecated.
+// Change LifecycleObserver to DefaultLifecycleObserver and implements onResume(LifecycleOwner)
+// and onPause(LifecycleOwner).
 
 class BoundLocationManager(
     lifecycleOwner: LifecycleOwner,
     private val locationListener: LocationListener,
     private val context: Context,
-) : LifecycleObserver {
+) : DefaultLifecycleObserver {
 
     companion object {
         fun bindLocationListenerIn(
@@ -25,9 +29,20 @@ class BoundLocationManager(
 
     private var locationManager: LocationManager? = null
 
-    // TODO: Add lifecycle observer in construction
+    init {
+        lifecycleOwner.lifecycle.addObserver(this)
+    }
 
-    // TODO: Call this on resume
+    override fun onResume(owner: LifecycleOwner) {
+        super.onResume(owner)
+        addLocationListener()
+    }
+
+    override fun onPause(owner: LifecycleOwner) {
+        super.onPause(owner)
+        removeLocationListener()
+    }
+
     @SuppressWarnings("MissingPermission")
     private fun addLocationListener() {
         locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
@@ -50,7 +65,6 @@ class BoundLocationManager(
         }
     }
 
-    // TODO: Call this on pause
     private fun removeLocationListener() {
         locationManager?.removeUpdates(locationListener)
         locationManager = null
