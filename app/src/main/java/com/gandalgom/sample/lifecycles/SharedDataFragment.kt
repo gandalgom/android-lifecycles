@@ -7,12 +7,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
+import androidx.lifecycle.ViewModelProvider
 
 class SharedDataFragment : Fragment() {
 
     private lateinit var seekBar: SeekBar
 
-    // TODO: get ViewModel
+    private val sharedDataViewModel: SharedDataViewModel by lazy {
+        ViewModelProvider(
+            requireActivity(),
+            ViewModelProvider.NewInstanceFactory()
+        )[SharedDataViewModel::class.java]
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,7 +35,9 @@ class SharedDataFragment : Fragment() {
     private fun subscribeSeekBar() {
         seekBar.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                // TODO: Set the ViewModel's value when the change comes from the user.
+                if (fromUser) {
+                    sharedDataViewModel.seekBarValue.value = progress
+                }
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
@@ -37,6 +45,8 @@ class SharedDataFragment : Fragment() {
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
 
-        // TODO: Update the SeekBar when the ViewModel is changed.
+        sharedDataViewModel.seekBarValue.observe(requireActivity()) { value ->
+            seekBar.progress = value
+        }
     }
 }
