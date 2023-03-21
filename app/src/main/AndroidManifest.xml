@@ -24,6 +24,9 @@
             android:exported="true" />
         <activity
             android:name=".BoundLocationActivity"
+            android:exported="true" />
+        <activity
+            android:name=".SharedDataActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
