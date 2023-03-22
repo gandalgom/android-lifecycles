@@ -4,16 +4,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.SystemClock
 import android.widget.Chronometer
-import androidx.lifecycle.ViewModelProvider
+import androidx.activity.viewModels
 
 class ChronometerActivity : AppCompatActivity() {
 
-    private val viewModel: ChronometerViewModel by lazy {
-        ViewModelProvider(
-            this,
-            ViewModelProvider.NewInstanceFactory()
-        )[ChronometerViewModel::class.java]
-    }
+    private val viewModel: ChronometerViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

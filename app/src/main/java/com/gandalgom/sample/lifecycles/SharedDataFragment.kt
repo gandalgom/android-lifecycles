@@ -7,18 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
 
 class SharedDataFragment : Fragment() {
 
     private lateinit var seekBar: SeekBar
 
-    private val sharedDataViewModel: SharedDataViewModel by lazy {
-        ViewModelProvider(
-            requireActivity(),
-            ViewModelProvider.NewInstanceFactory()
-        )[SharedDataViewModel::class.java]
-    }
+    private val sharedDataViewModel: SharedDataViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
