@@ -1,17 +1,18 @@
 package com.gandalgom.sample.lifecycles
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 
-class SavedStateViewModel : ViewModel() {
+class SavedStateViewModel(private val state: SavedStateHandle) : ViewModel() {
 
-    // TODO: Create constructor and use the LiveData from SavedStateHandle.
+    companion object {
+        private const val NAME_KEY = "name"
+    }
 
-    private val _name: MutableLiveData<String> = MutableLiveData()
-    val name: LiveData<String> get() = _name
+    val name: LiveData<String> = state.getLiveData(NAME_KEY)
 
     fun saveNewName(newName: String) {
-        _name.value = newName
+        state[NAME_KEY] = newName
     }
 }

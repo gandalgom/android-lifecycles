@@ -5,16 +5,11 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import androidx.lifecycle.ViewModelProvider
+import androidx.activity.viewModels
 
 class SavedStateActivity : AppCompatActivity() {
 
-    private val savedStateViewModel: SavedStateViewModel by lazy {
-        ViewModelProvider(
-            this,
-            ViewModelProvider.NewInstanceFactory()
-        )[SavedStateViewModel::class.java]
-    }
+    private val savedStateViewModel: SavedStateViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
